@@ -17,7 +17,7 @@ cmake -G "Ninja" %CMAKE_ARGS% ^
     -DLIBUSB_LIBRARIES:PATH="%LIBRARY_LIB%\libusb-1.0.lib" ^
     -DLIBUSB_INCLUDE_DIRS:PATH="%LIBRARY_INC%\libusb-1.0" ^
     -DENABLE_PACKAGING=OFF ^
-    -DBUILD_PYTHON=ON ^
+    -DBUILD_PYTHON=OFF ^
     -DBUILD_CLI=ON ^
     -DBUILD_EXAMPLES=OFF ^
     -DBUILD_TESTS=OFF ^
@@ -35,17 +35,8 @@ if errorlevel 1 exit 1
 cmake --build . --config Release --target install
 if errorlevel 1 exit 1
 
-:: Install python bindings
-if exist "bindings\python\setup.py" (
-    cd bindings\python
-) else (
-    cd ..\bindings\python
-)
-
-if not exist "setup.py" (
-    echo "Could not find setup.py for python bindings"
-    exit 1
-)
-
-%PYTHON% -m pip install . --no-deps --ignore-installed -vv
+:: Install python bindings from source tree
+cd ..\bindings\python
+if errorlevel 1 exit 1
+%PYTHON% -m pip install . --no-deps --no-build-isolation --ignore-installed -vv
 if errorlevel 1 exit 1
