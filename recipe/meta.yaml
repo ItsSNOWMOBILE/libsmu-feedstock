@@ -1,5 +1,5 @@
 {% set name = "libsmu" %}
-{% set version = "1.0.3" %}
+{% set version = "1.0.4" %}
 
 package:
   name: {{ name|lower }}
@@ -7,28 +7,35 @@ package:
 
 source:
   url: https://github.com/analogdevicesinc/{{ name }}/archive/v{{ version }}.tar.gz
-  sha256: 290d72bf5cec9ceab0030f6a4bc49bfd962aff56997aebebf70a20cb4a6bf77a
+  sha256: 4c7e53e4e8f6a6bdb642659c080f3f3b193f62c6c1aab0b0fad857fc0df99e37
 
 build:
-  number: 1
+  number: 0
+  skip: true  # [py<310]
   run_exports:
     - {{ pin_subpackage('libsmu', max_pin='x.x') }}
 
 requirements:
   build:
+    - {{ compiler('c') }}
     - {{ compiler('cxx') }}
+    - {{ stdlib("c") }}
     - {{ cdt('libudev-devel') }}  # [linux]
     - cmake
     - make  # [not win]
     - ninja  # [win]
     - pkg-config  # [not win]
+    - python                                 # [build_platform != target_platform]
+    - cython                                 # [build_platform != target_platform]
   host:
-    - boost-cpp
+    - {{ stdlib("c") }}
+    - libboost-devel
     - _openmp_mutex  # [linux]
     - libusb >=1
     - python
     - setuptools
     - cython
+    - pip
   run:
     - python
 

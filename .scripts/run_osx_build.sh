@@ -7,7 +7,8 @@ if [[ ${CI} == "travis" ]]; then
   echo -en 'travis_fold:start:install_miniforge\\r'
 fi
 MINIFORGE_URL="https://github.com/conda-forge/miniforge/releases/latest/download"
-MINIFORGE_FILE="Miniforge3-MacOSX-x86_64.sh"
+ARCH=$(uname -m)
+MINIFORGE_FILE="Miniforge3-MacOSX-${ARCH}.sh"
 curl -L -O "${MINIFORGE_URL}/${MINIFORGE_FILE}"
 bash $MINIFORGE_FILE -b
 if [[ ${CI} == "travis" ]]; then
@@ -23,7 +24,7 @@ source ${HOME}/miniforge3/etc/profile.d/conda.sh
 conda activate base
 
 echo -e "\n\nInstalling conda-forge-ci-setup=3 and conda-build."
-conda install -n base --quiet --yes "conda-forge-ci-setup=3" conda-build pip
+conda install -n base --quiet --yes conda-forge-ci-setup conda-build pip
 
 
 
