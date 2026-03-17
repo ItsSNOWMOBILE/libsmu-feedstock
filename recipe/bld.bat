@@ -8,6 +8,7 @@ cd build
 :: configure
 cmake -G "Ninja" %CMAKE_ARGS% ^
     -DCMAKE_POLICY_VERSION_MINIMUM=3.5 ^
+    -DCMAKE_CXX_STANDARD=14 ^
     -DCMAKE_BUILD_TYPE:STRING=Release ^
     -DCMAKE_INSTALL_PREFIX:PATH="%LIBRARY_PREFIX%" ^
     -DCMAKE_INSTALL_LIBDIR:PATH="lib" ^
@@ -21,7 +22,7 @@ cmake -G "Ninja" %CMAKE_ARGS% ^
     -DBUILD_EXAMPLES=OFF ^
     -DBUILD_TESTS=OFF ^
     -DINSTALL_UDEV_RULES=OFF ^
-    -DPYTHON_EXECUTABLE:FILEPATH="%PYTHON%" ^
+    -DPython_EXECUTABLE:FILEPATH="%PYTHON%" ^
     -DWITH_DOC=OFF ^
     ..
 if errorlevel 1 exit 1
