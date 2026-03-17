@@ -19,7 +19,6 @@ requirements:
   build:
     - {{ compiler('c') }}
     - {{ compiler('cxx') }}
-    - {{ stdlib("c") }}
     - {{ cdt('libudev-devel') }}  # [linux]
     - cmake
     - make  # [not win]
@@ -28,7 +27,6 @@ requirements:
     - python                                 # [build_platform != target_platform]
     - cython                                 # [build_platform != target_platform]
   host:
-    - {{ stdlib("c") }}
     - libboost-devel
     - _openmp_mutex  # [linux]
     - libusb >=1
